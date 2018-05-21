@@ -21,7 +21,7 @@ object Init extends GlobalSettings {
     /*    SETTING UP SPARK CONFIGURATION   */
     val conf = new SparkConf()
     conf.setAppName("Spark REST Application")
-    conf.setMaster("local")
+    conf.setMaster("yarn-client")
 
     sc = new SparkContext(conf)
 

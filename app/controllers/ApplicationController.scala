@@ -3,8 +3,7 @@ package controllers
 import javax.inject.Inject
 
 import scala.concurrent.Future
-
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{DataFrame}
 import play.api.i18n.MessagesApi
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -19,15 +18,21 @@ class ApplicationController @Inject()(implicit webJarAssets: WebJarAssets,
         SELECT * FROM godzilla WHERE date='2000-02-05' limit 8
       """.stripMargin
 
-     val sparkSession = Init. getSparkSessionInstance
+     val hiveContext = Init.getHiveContext
 
-      var imapala=Connections.Imapala.setImapala()
-      sparkSession.sqlContext.read.json("conf/data.json")
-      val result: DataFrame = sparkSession.sql(query1)
+      //var imapala=Connections.Imapala.setImapala()
+      hiveContext.read.json("conf/data.json")
+
+      val result: DataFrame = hiveContext.sql(query1)
       val rawJson = result.toJSON.collect().mkString
       Future.successful(Ok(Json.toJson(rawJson)))
 
     }
+  }
+
+  def home = Action{
+
+    Ok("Hello World ... !!!")
   }
 }
 

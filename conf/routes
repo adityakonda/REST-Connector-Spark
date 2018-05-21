@@ -11,3 +11,5 @@ GET     /webjars/*file                    controllers.WebJarAssets.at(file)
 
 GET     /locations/json       controllers.ApplicationController.index
 
+GET     /home       controllers.ApplicationController.home
+
